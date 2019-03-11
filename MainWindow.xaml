@@ -1,0 +1,41 @@
+﻿<Window x:Class="MMA_WorkFinder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MMA_WorkFinder"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="병역 지정업체 조회 :: 대한민국 병무청" Height="685" Width="1000"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Image Source="https://work.mma.go.kr/caisBYIS/images/common/logo.gif" Grid.Column="0" Grid.Row="0" Stretch="UniformToFill" />
+        <ListBox x:Name="ResultListView" Grid.Column="0" Grid.Row="2" BorderBrush="LightGray" BorderThickness="1" SelectionChanged="ResultListView_SelectionChanged">
+        </ListBox>
+        <Border Padding="10, 5" BorderBrush="LightGray" BorderThickness="1" Grid.Column="0" Grid.Row="1">
+            <ComboBox x:Name="PositionSelector" SelectionChanged="PositionSelector_SelectionChanged">
+                <ComboBoxItem Content="산업기능요원" IsSelected="True" />
+                <ComboBoxItem Content="전문연구요원" />
+            </ComboBox>
+        </Border>
+
+        <materialDesign:Card UniformCornerRadius="10" Padding="20,5" Margin="20" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Foreground="White" Height="54">
+            <TextBox x:Name="SearchQueryInput" InputMethod.PreferredImeConversionMode="Native" HorizontalAlignment="Stretch" TextWrapping="Wrap" materialDesign:HintAssist.Hint="업체명 입력" CaretBrush="White" FontSize="20" TextDecorations="{x:Null}" FontFamily="Malgun Gothic Semilight" VerticalAlignment="Center" Foreground="Black" SelectionBrush="{x:Null}" KeyUp="SearchQueryInput_KeyUp" />
+        </materialDesign:Card>
+
+        <materialDesign:Card UniformCornerRadius="10" Padding="20,10" Margin="20,-50,20,20" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch">
+            <WebBrowser x:Name="ViewPage" />
+        </materialDesign:Card>
+    </Grid>
+</Window>
