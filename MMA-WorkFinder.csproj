@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="App.cs" />
     <Compile Include="Formatter.cs" />
     <Compile Include="Structs\CoData.cs" />
     <Page Include="MainWindow.xaml">
@@ -113,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Libs\MaterialDesignColors.dll" />
+    <EmbeddedResource Include="Libs\MaterialDesignThemes.Wpf.dll" />
+    <EmbeddedResource Include="Libs\NSoup.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
