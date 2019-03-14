@@ -13,16 +13,15 @@ namespace MMA_WorkFinder
         public MainWindow()
         {
             InitializeComponent();
+            LoadImageReady();
 
             //dynamic activeX = this.ViewPage.GetType().InvokeMember("ActiveXInstance",
             //        BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
             //        null, this.ViewPage, new object[] { });
             //activeX.Silent = true;
-
-            ViewPage.NavigateToString(Formatter.GetHtml("<div class=\"layer\"><div class=\"layer_inner\"><img class=\"content\" draggable=\"false\" src=\"https://www.mma.go.kr/download/content/usr0000248/img3.gif\"><div></div>"));
         }
 
-        private List<CoData> coList = new List<CoData>();
+        private readonly List<CoData> coList = new List<CoData>();
 
         private void SearchQueryInput_KeyUp(object sender, KeyEventArgs e)
         {
@@ -30,9 +29,17 @@ namespace MMA_WorkFinder
             {
                 coList.Clear();
                 ResultListView.Items.Clear();
+
                 string result = Network.Request("https://work.mma.go.kr/caisBYIS/search/byjjecgeomsaek.do?eopjong_gbcd=" + (PositionSelector.SelectedIndex + 1) + "&eopche_nm=" + SearchQueryInput.Text);
                 Document doc = NSoup.Parse.Parser.Parse(result, "https://work.mma.go.kr");
                 Elements elms = doc.Select("th.title.t-alignLt.pl20px");
+
+                if (elms.Count.Equals(0))
+                {
+                    ResultListView.Items.Add("조회된 기업 없음");
+                    LoadImageReady();
+                }
+
                 foreach (var item in elms)
                 {
                     CoData coData = new CoData();
@@ -83,6 +90,11 @@ namespace MMA_WorkFinder
                 else result = str;
             }
             return result;
+        }
+
+        private void LoadImageReady()
+        {
+            ViewPage.NavigateToString(Formatter.GetHtml("<div class=\"layer\"><div class=\"layer_inner\"><img class=\"content\" draggable=\"false\" src=\"https://www.mma.go.kr/download/content/usr0000248/img3.gif\"><div></div>"));
         }
 
         private void ResultListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
